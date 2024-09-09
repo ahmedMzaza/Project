@@ -9,7 +9,7 @@
       }"
       class="card"
     >
-      <a @click="isFav(prodect.id)">
+      <a class="Fav">
         <i class="fa-regular fa-heart"></i>
       </a>
       <img class="cardImg" src="../assets/cardprodect.png" alt="Title" />
@@ -46,6 +46,7 @@
 
 <script>
 import { VNumberInput } from "vuetify/labs/VNumberInput";
+import axios from "axios";
 
 export default {
   components: {
@@ -75,6 +76,26 @@ export default {
         })
         .catch((err) => console.log(err.message));
     },
+  },
+  setup() {
+    const deleteProduct = async (productId) => {
+      try {
+        const token = localStorage.getItem("token");
+        await axios.delete(
+          `https://drwessamhabib.com/public/api/wishlist/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        window.location.reload();
+      } catch (error) {
+        console.error("حدث خطأ:", error);
+        this.$notify.error("حدث خطأ أثناء حذف المنتج: " + error.message);
+      }
+    };
+    return { deleteProduct };
   },
 };
 </script>
@@ -163,5 +184,18 @@ export default {
 .promotion-D .card > i:hover {
   background-color: var(--mainColor);
   color: white;
+}
+.Fav {
+  background-color: var(--mainColor);
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  font-size: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

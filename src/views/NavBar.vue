@@ -22,6 +22,8 @@ export default {
   methods: {
     opencc(flo) {
       console.log(flo);
+      localStorage.setItem("catego", flo);
+      this.$router.push("/Promotions");
     },
     openSide() {
       this.SideBar = true;
@@ -156,7 +158,6 @@ import ref from "vue";
                 :key="i"
                 link
                 @click="opencc(i.id)"
-                :to="{ name: 'Like', params: { name: i.name, id: i.id } }"
               >
                 <v-list-item-title
                   class="text-end d-flex justify-space-between align-center"
