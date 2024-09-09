@@ -125,12 +125,12 @@ import ref from "vue";
         </li>
 
         <li>
-          <router-link to="/vueTest">
+          <router-link to="/Loge">
             تسجيل الدخول <i class="fa-solid fa-user"></i
           ></router-link>
         </li>
         <li>
-          <router-link to="/Loge">
+          <router-link to="/Like">
             المفضلة<i class="fa-solid fa-heart"></i>
           </router-link>
         </li>
