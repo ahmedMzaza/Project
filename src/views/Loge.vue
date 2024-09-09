@@ -49,7 +49,6 @@
         :class="[CreateAccount ? 'divCreate' : '']"
       >
         <form v-show="SignIn" @submit.prevent="submit">
-          {{ SignInValuePass }}{{ SignInValueEmail }}
           <v-text-field
             v-model="SignInValueEmail"
             :rules="[rules.required]"
