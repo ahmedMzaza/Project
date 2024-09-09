@@ -9,7 +9,7 @@
       }"
       class="card"
     >
-      <a class="Fav">
+      <a class="Fav" @click.prevent="deleteProduct">
         <i class="fa-regular fa-heart"></i>
       </a>
       <img class="cardImg" src="../assets/cardprodect.png" alt="Title" />
