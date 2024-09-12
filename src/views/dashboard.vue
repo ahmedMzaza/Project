@@ -993,8 +993,9 @@ export default {
       this.open();
     },
     DELETEPRODUCT(PID) {
+      const ID_REMOVE = Number(PID);
       const Token = this.token; // استبدل هذا بالقيمة الفعلية لـ Token المسؤول
-      fetch(`https://drwessamhabib.com/public/api/product/${PID}`, {
+      fetch(`https://drwessamhabib.com/public/api/product/${ID_REMOVE}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -1010,16 +1011,16 @@ export default {
         })
         .then((data) => {
           console.log(data.message);
+          this.user = false;
+          this.Products = true;
+          this.AddNProduct = false;
+          this.ViewUser = false;
+          this.PRODUCTING();
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
         });
-      window.location.reload();
-      this.user = false;
-      this.Products = true;
-      this.AddNProduct = false;
-      this.ViewUser = false;
-      this.PRODUCTFATCH();
     },
     openView(userID) {
       this.ViewUser = true;
