@@ -931,14 +931,6 @@ export default {
               this.PRODUCTFROMG.push(data.data.products.data[i]);
               console.log(data.data.name);
             }
-            /*     for (let i = 0; i < this.PRODUCTFROMG.length; i++) {
-              for (let j = 0; j < this.PRODUCTS.length; j++) {
-                if (this.PRODUCTFROMG[i].id == this.PRODUCTS[j].id) {
-                  this.PRODUCTFROMG[i].push(this.PRODUCTS[j].name);
-                  console.log(this.PRODUCTS[j].name);
-                }
-              }
-            } */
           })
           .catch((error) => {
             console.error(error); // التعامل مع الأخطاء

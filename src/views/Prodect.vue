@@ -80,9 +80,10 @@
       <v-col cols="12">
         <h1>Similar Products</h1>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" height="400px">
         <swiper
-          :slidesPerView="4"
+          height="400px"
+          :slidesPerView="5"
           :autoplay="{
             delay: 2500,
             disableOnInteraction: false,
@@ -92,6 +93,25 @@
           :pagination="{
             clickable: true,
           }"
+          :breakpoints="{
+            '120': {
+              slidesPerView: 1.2,
+              spaceBetween: 50,
+            },
+            '640': {
+              slidesPerView: 2,
+              spaceBetween: 30,
+            },
+            '768': {
+              slidesPerView: 3,
+              spaceBetween: 40,
+            },
+            '1024': {
+              slidesPerView: 5,
+              spaceBetween: 30,
+            },
+          }"
+          :navigation="true"
           :modules="modules"
           style="padding: 10px"
         >
@@ -137,29 +157,14 @@
               </v-col>
 
               <v-col cols="12" class="d-flex align-center">
-                <v-col cols="5">
-                  <v-number-input
-                    class="flex-row"
-                    height="40px"
-                    :reverse="false"
-                    controlVariant="split"
-                    label=""
-                    :hideInput="false"
-                    :inset="false"
-                    :model-value="cards.quantity"
-                    variant="outlined"
-                  ></v-number-input>
-                </v-col>
-                <v-col cols="4">
-                  <v-btn
-                    @click.prevent="
-                      ADD_PRODUCT_FROM_SIMILAR(cards.id, cards.quantity)
-                    "
-                    style="z-index: 1000; cursor: pointer"
-                  >
-                    <i class="fa-solid fa-cart-shopping"></i>
-                  </v-btn>
-                </v-col>
+                <v-btn
+                  @click.prevent="
+                    ADD_PRODUCT_FROM_SIMILAR(cards.id, cards.quantity)
+                  "
+                  style="z-index: 1000; cursor: pointer; width: 80%"
+                >
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </v-btn>
               </v-col>
             </router-link>
           </swiper-slide>
@@ -407,7 +412,7 @@ export default {
   computed: {
     ADD_PRODUCT_FROM_SIMILAR(CARDID, CARDQUANTITY) {
       const token = localStorage.getItem("token");
-      const Quantity = Number(CARDQUANTITY);
+      /*   const Quantity = Number(CARDQUANTITY); */
 
       const params = new URLSearchParams({
         product_id: CARDID,
@@ -553,6 +558,10 @@ export default {
 };
 </script>
 <style scoped>
+.v-number-input--split .v-field__input {
+  height: 40px !important;
+  padding: 0 !important;
+}
 :root {
   --mainColor: #1e90ff;
   --swiper-navigation-size: 44px;

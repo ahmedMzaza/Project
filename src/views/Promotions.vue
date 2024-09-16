@@ -130,11 +130,17 @@
         :loading="loading"
         :class="[promotionDS ? 'promotion-DS' : '']"
       >
+        <v-progress-linear
+          color="primary"
+          :active="loading"
+          indeterminate
+        ></v-progress-linear>
+
         <router-link
           :v-if="!loading"
           v-for="card in promotions"
           :key="card.id"
-          :to="{}"
+          :to="{ name: 'Prodect', params: { id: card.id } }"
           class="card"
           :class="[cardS ? 'cardS' : '']"
         >
@@ -157,7 +163,7 @@
             <div class="cardBuy" @click.stop>
               <div class="num">
                 <v-number-input
-                  height="40px"
+                  density="compact"
                   :reverse="false"
                   controlVariant="split"
                   label=""
@@ -168,16 +174,13 @@
                 ></v-number-input>
               </div>
 
-              <a
-                @click.prevent="ADDPRODUCT(card.id, quantity)"
-                style="z-index: 10; cursor: pointer"
-              >
+              <a @click.prevent="ADDPRODUCT(card.id, quantity)">
                 <i class="fa-solid fa-cart-shopping"></i>
               </a>
             </div>
           </div>
         </router-link>
-        <v-col cols="4">
+        <v-col cols="4" style="direction: ltr">
           <v-card>
             <v-pagination
               class="flex-row-reverse"
@@ -280,6 +283,7 @@ export default {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+
           for (let i = 0; i < data.data.data.length; i++) {
             console.log(data.data.data[i].id);
             for (let j = 0; j < this.promotions.length; j++) {
@@ -320,12 +324,24 @@ export default {
     },
     open() {
       this.loading = true;
+
       fetch(`https://drwessamhabib.com/public/api/product?page=${this.page}`)
         .then((res) => res.json())
         .then((data) => {
           this.promotions = data.data.data;
           this.passengers = data.data.meta.total;
-          console.log(data);
+          const ID = localStorage.getItem("CategoryID");
+          console.log(localStorage.getItem("CategoryID"));
+
+          console.log(data.data.meta.to);
+          if (localStorage.getItem("CategoryID") != null) {
+            for (let i = 0; i < data.data.meta.to; i++) {
+              if (this.promotions[i].category_id == ID) {
+                console.log("ahmed done dont worry");
+              }
+            }
+          }
+          console.log(data.data.data[4].category_id);
           this.loading = false;
         })
         .catch((err) => console.log(err.message));
@@ -439,6 +455,11 @@ h3 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
+  min-height: 700px;
+}
+.promotion-D .card:hover {
+  box-shadow: 0 0 20px #777;
+  border: 1px solid #777;
 }
 .promotion-D .card {
   width: 30%;
@@ -449,7 +470,12 @@ h3 {
   padding: 0px 10px;
   background-color: white;
   box-shadow: 0 0 20px #7777774d;
+  border: 1px solid white;
   border-radius: 15px;
+  transition: 0.5s;
+}
+.promotion-D .card .cardBody h4 {
+  font-size: 25px;
 }
 .promotion-D .card .cardBody {
   display: flex;
@@ -460,24 +486,44 @@ h3 {
 }
 .promotion-D .card .cardImg {
   margin: 0 auto;
-  max-width: 100%;
-  max-height: 50%;
+  width: 100%;
+  height: 95%;
 }
 .promotion-D .card .cardBuy {
   display: flex;
-  align-items: center;
+  align-content: center;
   justify-content: space-between;
   padding: 0 10px;
+  gap: 20px;
 }
 .promotion-D .card .cardBody del {
   font-size: 15px;
   text-decoration: line-through;
   color: red;
 }
-.promotion-D .card .cardBody i {
+.v-input {
+  height: 40px !important;
+}
+.promotion-D .card .cardBody a:hover {
+  color: var(--mainColor);
+  background-color: white;
+  border: 1px solid #77777757;
+  box-shadow: 0 0 20px #77777738;
+}
+.promotion-D .card .cardBody a {
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  cursor: pointer;
+  width: 50%;
   padding: 6px;
-  background-color: var(--mainColor);
-  color: white;
+  color: var(--mainColor);
+  border: 1px solid var(--mainColor);
+  background-color: white;
+  box-sizing: border-box;
+  transition: 0.5s;
 }
 .promotion-D .card .num i {
   padding: 6px;
@@ -495,6 +541,8 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  top: 15px;
 }
 .Fav:hover,
 .Fav.active {
@@ -512,7 +560,8 @@ h3 {
   font-size: 11px;
 }
 .promotion-D .card .cardText {
-  font-size: 14px;
+  font-size: 20px;
+  color: green;
 }
 .promotion-D .card > i {
   position: relative;
@@ -547,10 +596,30 @@ h3 {
   flex-direction: row !important;
   justify-content: center !important;
   align-items: center !important;
-  height: 180px !important;
+  height: 200px !important;
+}
+.promotion-DS .cardS .Fav {
+  position: relative;
+  top: -70px !important;
+}
+.promotion-DS .cardS .cardImg {
+  width: 60% !important;
+  height: 95% !important;
+}
+.promotion-DS .cardS .cardBuy {
+  padding: 0px !important;
+}
+.promotion-DS .cardS .cardText {
+  font-size: 20px;
+  color: green;
+}
+.promotion-DS .cardS .cardBody h4 {
+  font-size: 28px !important;
 }
 .promotion-DS .cardS .cardBody {
   gap: 20px !important;
+  justify-content: space-around;
+  height: 100%;
 }
 .ult,
 .UL {
@@ -562,6 +631,11 @@ h3 {
   }
   .promotion-D .card .cardBody {
     width: 100%;
+  }
+}
+@media (max-width: 1220px) {
+  .promotion-D .card {
+    width: 40%;
   }
 }
 @media (max-width: 780px) {
