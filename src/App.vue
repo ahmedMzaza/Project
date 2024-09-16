@@ -1,21 +1,19 @@
 <template>
-  <NavBar/>
-  <Footer/>
-  
+  <NavBar />
+  <Footer />
 </template>
 
 <script>
-
-import  vuetest from "./views/navtest.vue";
-import  NavBar from "./views/NavBar.vue";
-import  Footer from "./views/Footer.vue";
+import vuetest from "./views/navtest.vue";
+import NavBar from "./component/NavBar.vue";
+import Footer from "./component/Footer.vue";
 
 export default {
   name: "App",
-  components:{
+  components: {
     Footer,
-    NavBar
-  }
+    NavBar,
+  },
 };
 </script>
 
@@ -27,8 +25,8 @@ export default {
   --mainColor: #1e90ff;
   --FTWeight: 700;
   --FTSize: 1.4rem;
-  --swiper-pagination-color:#1e90ff;
-  --swiper-navigation-color:#1e90ff;
+  --swiper-pagination-color: #1e90ff;
+  --swiper-navigation-color: #1e90ff;
 }
 
 * {
@@ -39,7 +37,7 @@ export default {
   box-sizing: border-box;
   list-style-type: none;
 }
-#app{
+#app {
   position: relative;
   top: 100px;
 }

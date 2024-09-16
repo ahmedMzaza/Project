@@ -27,9 +27,11 @@ export default {
     },
     openSide() {
       this.SideBar = true;
+      document.documentElement.classList.add("active");
     },
     closeSide() {
       this.SideBar = false;
+      document.documentElement.classList.remove("active");
     },
     largeMenuUlChange() {
       this.isActive = !this.isActive;
@@ -95,6 +97,11 @@ export default {
     },
     setContent() {
       this.content = localStorage.content;
+    },
+    openCategory(IDCategory) {
+      localStorage.setItem("CategoryID", IDCategory);
+      console.log(localStorage.CategoryID);
+      this.$router.push("/Promotions");
     },
   },
   computed: {},
@@ -246,6 +253,12 @@ import ref from "vue";
     <div class="sideBar" :class="[SideBar ? 'active' : '']">
       <div class="side">
         <div>
+          <a
+            @click="closeSide"
+            style="width: 5%; text-align: center; padding: 5px; height: auto"
+          >
+            <i class="fa-solid fa-x"></i>
+          </a>
           <p>مرحبا!</p>
           <router-link to="/Loge">
             تسجيل الدخول <i class="fa-solid fa-user"></i
@@ -254,29 +267,35 @@ import ref from "vue";
         <ul>
           <li>
             <a @click="ChangeUl">
-              العناية بالأم والطفل
+              جميع الفئات
               <i
                 class="fa-solid fa-chevron-down"
                 :class="[UlLi ? 'active' : '']"
               ></i>
             </a>
             <ul :class="[UlLi ? 'active' : '']">
-              <li>العناية بالأم</li>
-              <li>العناية بالأم</li>
-              <li>العناية بالأم</li>
-              <li>العناية بالأم</li>
-              <li>العناية بالأم</li>
-              <li>العناية بالأم</li>
+              <li
+                class="border-bottom: 1px solid #00000045 !important;"
+                v-for="j in Main.data"
+                :key="j.id"
+                @click="openCategory(j.id)"
+              >
+                <a> {{ j.name }}</a>
+              </li>
             </ul>
+          </li>
+          <li>
+            <router-link to="/Promotions" style="color: red">
+              العروض
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/Like">
+              المفضلة<i class="fa-solid fa-heart"></i>
+            </router-link>
           </li>
         </ul>
       </div>
-      <a
-        @click="closeSide"
-        style="width: 5%; text-align: center; padding: 15px 0; height: 70px"
-      >
-        <i class="fa-solid fa-x"></i>
-      </a>
     </div>
   </nav>
   <router-view />
@@ -490,10 +509,9 @@ nav main .search input {
 }
 .sideBar.active {
   transform: translateX(0) !important;
-  overflow: scroll;
 }
 .sideBar .side {
-  width: 95%;
+  width: 100%;
   height: 100%;
   background-color: white;
   box-shadow: 1px 1px 20px #000000b0;
@@ -523,6 +541,10 @@ nav main .search input {
 .sideBar .side ul {
   background-color: white;
 }
+
+.sideBar .side ul li ul li:hover {
+  background-color: #77777736;
+}
 .sideBar .side ul li ul {
   display: none;
 }
@@ -532,6 +554,7 @@ nav main .search input {
 .sideBar .side ul li ul li {
   border: none;
   color: black;
+  transition: 0.5s;
 }
 .sideBar .side ul li a i {
   transform: rotate(0deg);
@@ -604,7 +627,7 @@ nav main .search input {
   .headerS .search input {
     border: none;
     height: 40px;
-    font-size: 25px;
+    font-size: 14px;
     width: 95%;
     background-color: transparent;
     padding: 0 10px;
