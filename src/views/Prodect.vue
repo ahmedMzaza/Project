@@ -161,7 +161,7 @@
                   @click.prevent="
                     ADD_PRODUCT_FROM_SIMILAR(cards.id, cards.quantity)
                   "
-                  style="z-index: 1000; cursor: pointer; width: 80%"
+                  style="z-index: 1000; cursor: pointer; width: 100%"
                 >
                   <i class="fa-solid fa-cart-shopping"></i>
                 </v-btn>
